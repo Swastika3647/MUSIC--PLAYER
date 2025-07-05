@@ -26,19 +26,22 @@
                 Your browser does not support the audio element.
             </audio>
             <div class="audio-controls">
-                <div class="time">0:00 / 2:40</div>
-                <input type="range" class="audio-bar" />
+                
+                
                 <i class="volume-icon"></i>
               </div>
               
             <input type="range" value="0" id="progress">
             <div class="controls">
-                <div><i class="fa-solid fa-backward"></i></div>
-                <div onclick="playPause()"><i class="fa-solid fa-play" id="ctrlIcon"></i></div>
-                <div><i class="fa-solid fa-forward"></i></div>
-            </div>
+    <div onclick="rewind()"><i class="fa-solid fa-backward"></i></div>
+    <div onclick="playPause()"><i class="fa-solid fa-play" id="ctrlIcon"></i></div>
+    <div onclick="forward()"><i class="fa-solid fa-forward"></i></div>
+</div>
+
 
         </div>
+        <blockquote id="quoteBox">"Take your time to polish your talent."</blockquote>
+
     </div>
     
 <script>
@@ -74,6 +77,35 @@ progress.onchange = function(){
     ctrlIcon.classList.add("fa-pause");
     ctrlIcon.classList.remove("fa-play");
 }
+function rewind() {
+    song.currentTime = Math.max(0, song.currentTime - 10); // go 10s back
+}
+
+function forward() {
+    song.currentTime = Math.min(song.duration, song.currentTime + 10); // skip 10s ahead
+}
+function playPause() {
+  if (song.paused) {
+    song.play();
+    ctrlIcon.classList.replace("fa-play", "fa-pause");
+    document.querySelector(".song-img").classList.add("spin");
+  } else {
+    song.pause();
+    ctrlIcon.classList.replace("fa-pause", "fa-play");
+    document.querySelector(".song-img").classList.remove("spin");
+  }
+}
+
+for (let i = 0; i < 15; i++) {
+  let firefly = document.createElement("div");
+  firefly.className = "firefly";
+  firefly.style.left = Math.random() * 100 + "vw";
+  firefly.style.animationDuration = 5 + Math.random() * 5 + "s";
+  document.body.appendChild(firefly);
+}
+
+
+
 
 
 </script>
